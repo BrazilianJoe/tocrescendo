@@ -61,9 +61,9 @@ export const site = {
   },
 
   services: {
-    title: "Avaliação TEA, TDAH e neuropsicopedagogia",
+    title: "Avaliação TEA, TDAH, AH/SD, TOD e neuropsicopedagogia",
     subtitle:
-      "Avaliação TDAH online, avaliação TEA e acompanhamento contínuo — três formas de cuidado que se complementam.",
+      "Avaliação neuropsicopedagógica online e a domicílio, com acompanhamento contínuo — três formas de cuidado que se complementam.",
     pillars: [
       {
         title: "Avaliações neuropsicopedagógicas",
@@ -163,7 +163,7 @@ export const site = {
     title:
       "Neuropsicopedagogia em Porto Alegre e Online | Tô Crescendo – TEA, TDAH e Dificuldades de Aprendizagem",
     description:
-      "Neuropsicopedagoga em Porto Alegre e online. Avaliação TEA, TDAH e AH/SD, acompanhamento e dificuldades de aprendizagem. Atendimento a domicílio na região e em todo o Brasil.",
+      "Neuropsicopedagoga em Porto Alegre e online. Avaliação TEA, TDAH, AH/SD e TOD, acompanhamento e dificuldades de aprendizagem. Atendimento a domicílio na região e em todo o Brasil.",
     keywords: [
       "neuropsicopedagoga Porto Alegre",
       "neuropsicopedagogia online",
