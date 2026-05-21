@@ -7,3 +7,9 @@ export function whatsappUrl(
   const params = new URLSearchParams({ text: message });
   return `https://wa.me/${phone}?${params.toString()}`;
 }
+
+export function phoneTelUrl(
+  phone = site.contact.whatsappPhone,
+): string {
+  return `tel:+${phone}`;
+}

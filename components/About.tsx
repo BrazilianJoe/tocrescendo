@@ -12,6 +12,7 @@ export function About() {
             <h2 className="font-display text-3xl font-semibold text-foreground sm:text-4xl">
               {site.about.title}
             </h2>
+            <p className="mt-3 text-lg text-muted">{site.about.subtitle}</p>
             <div className="mt-6 space-y-4 text-muted leading-relaxed">
               {site.about.paragraphs.map((p) => (
                 <p key={p.slice(0, 40)}>{p}</p>

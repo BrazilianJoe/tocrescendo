@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { DM_Sans, Fraunces } from "next/font/google";
+import { JsonLd } from "@/components/JsonLd";
 import { site } from "@/content/site";
 import "./globals.css";
 
@@ -19,6 +20,10 @@ export const metadata: Metadata = {
   metadataBase: new URL(site.url),
   title: site.seo.title,
   description: site.seo.description,
+  keywords: [...site.seo.keywords],
+  alternates: {
+    canonical: site.url,
+  },
   openGraph: {
     title: site.seo.title,
     description: site.seo.description,
@@ -50,7 +55,10 @@ export default function RootLayout({
       lang="pt-BR"
       className={`${dmSans.variable} ${fraunces.variable} h-full antialiased`}
     >
-      <body className="min-h-full font-sans">{children}</body>
+      <body className="min-h-full font-sans pb-20 sm:pb-0">
+        <JsonLd />
+        {children}
+      </body>
     </html>
   );
 }

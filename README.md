@@ -1,6 +1,6 @@
 # Tô Crescendo — Neuropsicopedagogia
 
-Landing page profissional para atendimento neuropsicopedagógico online e presencial. Site estático em Next.js, sem banco de dados.
+Landing page profissional para neuropsicopedagogia online e a domicílio em Porto Alegre. Site estático em Next.js, sem banco de dados.
 
 ## Desenvolvimento local
 
@@ -69,6 +69,40 @@ No painel da Vercel: **Settings → Domains** → adicione seu domínio e config
 | `npm run build` | Build de produção |
 | `npm run start` | Servidor de produção local |
 | `npm run lint` | ESLint |
+
+## SEO e presença online
+
+### No código (já configurado)
+
+- Meta title e description em [`content/site.ts`](content/site.ts) → `seo`
+- Headings com palavras-chave (Porto Alegre, TEA, TDAH, online, domicílio)
+- `sitemap.xml`, `robots.txt`, Open Graph, canonical, JSON-LD
+- Botão flutuante WhatsApp
+
+Após o deploy, atualize `site.url` com a URL real de produção e faça push.
+
+### Google Search Console
+
+1. Acesse [Google Search Console](https://search.google.com/search-console)
+2. Adicione a propriedade com a URL do site
+3. Verifique a propriedade (tag HTML ou DNS na Vercel)
+4. Envie o sitemap: `https://SEU-DOMINIO/sitemap.xml`
+
+### Google Business Profile
+
+1. Acesse [Google Business](https://business.google.com)
+2. Crie ou reivindique o perfil (ex.: Tô Crescendo / Instituto Tô Crescendo)
+3. Tipo: **área de atendimento** (Porto Alegre e região) — sem endereço de consultório se não houver
+4. Preencha igual ao site:
+   - Site: URL de produção
+   - Telefone: (51) 99322-9937
+   - Instagram: https://www.instagram.com/institutotocrescendo/
+5. Descreva os serviços: avaliações TEA/TDAH, acompanhamento, online e a domicílio
+6. Adicione fotos e horários de atendimento
+
+### Validar dados estruturados
+
+Teste em [Rich Results Test](https://search.google.com/test/rich-results) com a URL publicada.
 
 ## Próximas fases (roadmap)
 

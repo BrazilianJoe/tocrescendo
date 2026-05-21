@@ -59,11 +59,15 @@ export function Hero() {
 
       <div className="relative mx-auto grid max-w-6xl items-center gap-10 lg:grid-cols-[1fr_minmax(260px,400px)] lg:gap-14">
         <div className="order-2 lg:order-1">
-          <h1 className="font-display max-w-3xl text-4xl font-semibold leading-tight tracking-tight text-foreground sm:text-5xl lg:text-[2.75rem] lg:leading-tight">
-            {site.hero.headline}
+          <h1 className="font-display max-w-3xl text-3xl font-semibold leading-tight tracking-tight text-foreground sm:text-4xl lg:text-[2.75rem] lg:leading-tight">
+            {site.hero.title}
           </h1>
 
-          <p className="mt-6 max-w-2xl text-lg leading-relaxed text-muted sm:text-xl">
+          <p className="mt-4 max-w-2xl text-xl font-medium leading-snug text-foreground sm:text-2xl">
+            {site.hero.pitch}
+          </p>
+
+          <p className="mt-4 max-w-2xl text-lg leading-relaxed text-muted sm:text-xl">
             {site.hero.subheadline}
           </p>
 

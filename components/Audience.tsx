@@ -18,8 +18,17 @@ export function Audience() {
           {site.audience.items.map((item) => (
             <li
               key={item.title}
-              className="rounded-2xl border border-border bg-background p-6 transition-shadow hover:shadow-md"
+              className={`rounded-2xl border p-6 transition-shadow hover:shadow-md ${
+                "featured" in item && item.featured
+                  ? "border-primary/40 bg-surface shadow-sm ring-1 ring-primary/15"
+                  : "border-border bg-background"
+              }`}
             >
+              {"featured" in item && item.featured && (
+                <span className="mb-3 inline-block rounded-full bg-primary-light/50 px-3 py-1 text-xs font-semibold uppercase tracking-wide text-primary-dark">
+                  Primeiro passo
+                </span>
+              )}
               <h3 className="font-display text-lg font-semibold text-foreground">
                 {item.title}
               </h3>

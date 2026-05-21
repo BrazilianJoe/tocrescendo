@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { Logo } from "@/components/Logo";
 import { site } from "@/content/site";
-import { whatsappUrl } from "@/lib/links";
+import { phoneTelUrl, whatsappUrl } from "@/lib/links";
 
 export function Footer() {
   const year = new Date().getFullYear();
@@ -16,7 +16,15 @@ export function Footer() {
               {site.professional.name}
             </p>
             <p className="text-sm text-muted">{site.professional.credential}</p>
-            <p className="text-sm text-muted">{site.professional.city}</p>
+            <p className="text-sm text-muted">{site.professional.serviceArea}</p>
+            <p className="mt-2 text-sm">
+              <Link
+                href={phoneTelUrl()}
+                className="font-medium text-primary-dark hover:underline"
+              >
+                {site.contact.phoneDisplay}
+              </Link>
+            </p>
           </div>
         </div>
 
