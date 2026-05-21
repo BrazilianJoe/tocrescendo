@@ -82,7 +82,7 @@ export const site = {
         description:
           "Processo contínuo com sessões regulares para desenvolver estratégias de aprendizagem, atenção e autonomia no dia a dia.",
         details: [
-          "Plano individualizado com metas revisadas ao longo do tempo",
+          "Plano individualizado com metas revisadas a curto, médio e longo prazo",
           "Atividades lúdicas e funcionais adaptadas à idade e ao perfil",
           "Integração com rotina escolar e familiar",
         ],
