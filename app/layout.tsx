@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { Analytics } from "@vercel/analytics/next";
 import { DM_Sans, Fraunces } from "next/font/google";
 import { JsonLd } from "@/components/JsonLd";
 import { site } from "@/content/site";
@@ -58,6 +59,7 @@ export default function RootLayout({
       <body className="min-h-full font-sans pb-20 sm:pb-0">
         <JsonLd />
         {children}
+        <Analytics />
       </body>
     </html>
   );
