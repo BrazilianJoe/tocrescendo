@@ -6,7 +6,7 @@
  */
 @theme inline {
   --color-background: #f0f7fc;
-  --color-foreground: #4a5568;
+  --color-foreground: #3d4f5f;
   --color-primary: #78a6c2;
   --color-primary-dark: #5a8fb0;
   --color-primary-light: #accee0;
@@ -14,7 +14,7 @@
   --color-secondary-dark: #b35d5f;
   --color-secondary-light: #f1b3ae;
   --color-accent: #e8b84a;
-  --color-muted: #6b7a8f;
+  --color-muted: #5a7085;
   --color-surface: #ffffff;
   --color-border: #c5d9e8;
   --font-sans: var(--font-dm-sans);
@@ -23,6 +23,16 @@
 
 .font-display {
   font-family: var(--font-fraunces), Georgia, serif;
+}
+
+h1.font-display,
+h2.font-display,
+h3.font-display {
+  color: var(--color-primary-dark);
+}
+
+#contato h2.font-display {
+  color: #ffffff;
 }
 
 html {

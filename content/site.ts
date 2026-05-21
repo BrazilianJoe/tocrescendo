@@ -67,18 +67,18 @@ export const site = {
     pillars: [
       {
         title: "Avaliações neuropsicopedagógicas",
-        highlight: "TEA, TDAH, AH/SD e outros perfis",
+        highlight: "TEA, TDAH, AH/SD, TOD e outros perfis",
         description:
           "Para quem busca clareza sobre desenvolvimento, aprendizagem ou comportamento — com devolutiva cuidadosa e próximos passos definidos.",
         details: [
-          "Avaliação TEA, TDAH e Altas Habilidades/Superdotação (AH/SD)",
+          "Avaliação TEA, TDAH, Altas Habilidades/Superdotação (AH/SD), TOD e outras",
           "Entrevistas, observação e instrumentos reconhecidos na área",
           "Laudo e orientações que dialogam com escola e outros profissionais",
         ],
       },
       {
         title: "Acompanhamento neuropsicopedagógico",
-        highlight: "Sessões semanais ou quinzenais",
+        highlight: "Sessões diárias, semanais ou quinzenais",
         description:
           "Processo contínuo com sessões regulares para desenvolver estratégias de aprendizagem, atenção e autonomia no dia a dia.",
         details: [
