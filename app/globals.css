@@ -1,26 +1,41 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
+/*
+ * Brand palette from watercolor logos (ImageMagick sample):
+ * Blue #78A6C2 · Coral #C66D6F · Light blue #ACCCE0 · Peach #F1B3AE · Paper #F3F8FC
+ */
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-background: #f0f7fc;
+  --color-foreground: #4a5568;
+  --color-primary: #78a6c2;
+  --color-primary-dark: #5a8fb0;
+  --color-primary-light: #accee0;
+  --color-secondary: #c66d6f;
+  --color-secondary-dark: #b35d5f;
+  --color-secondary-light: #f1b3ae;
+  --color-accent: #e8b84a;
+  --color-muted: #6b7a8f;
+  --color-surface: #ffffff;
+  --color-border: #c5d9e8;
+  --font-sans: var(--font-dm-sans);
+  --font-display: var(--font-fraunces);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+.font-display {
+  font-family: var(--font-fraunces), Georgia, serif;
+}
+
+html {
+  scroll-behavior: smooth;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background-color: #f0f7fc;
+  background-image:
+    radial-gradient(ellipse 80% 60% at 0% 0%, rgb(172 206 224 / 0.45), transparent),
+    radial-gradient(ellipse 70% 50% at 100% 20%, rgb(241 179 174 / 0.35), transparent),
+    radial-gradient(ellipse 60% 40% at 50% 100%, rgb(172 206 224 / 0.2), transparent);
+  color: var(--color-foreground);
+  font-family: var(--font-dm-sans), system-ui, sans-serif;
+  min-height: 100%;
 }
