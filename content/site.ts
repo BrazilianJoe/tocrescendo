@@ -12,7 +12,7 @@ export const site = {
     whatsappPhone: "5551993229937",
     whatsappMessage:
       "Olá! Vim pelo site Tô Crescendo e gostaria de saber mais sobre o atendimento neuropsicopedagógico.",
-    instagram: "https://instagram.com/tocrescendo",
+    instagram: "https://www.instagram.com/institutotocrescendo/",
   },
 
   professional: {
