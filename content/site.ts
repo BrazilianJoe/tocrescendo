@@ -35,7 +35,7 @@ export const site = {
     title: "Neuropsicopedagogia em Porto Alegre e Online",
     pitch: "Seu filho aprende de um jeito único.",
     subheadline:
-      "Neuropsicopedagoga especializada em TEA, TDAH, AH/SD e dificuldades de aprendizagem — com avaliação, acompanhamento contínuo e orientação às famílias.",
+      "Neuropsicopedagoga especializada em TEA, TDAH, AH/SD, TOD e dificuldades de aprendizagem — com avaliação, acompanhamento contínuo e orientação às famílias.",
     badges: [
       { label: "Online em todo o Brasil", icon: "globe" as const },
       {
