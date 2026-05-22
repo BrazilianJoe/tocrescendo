@@ -45,6 +45,12 @@ export function Footer() {
           >
             Instagram
           </Link>
+          <Link
+            href="/privacidade"
+            className="text-sm font-medium text-muted hover:text-primary-dark hover:underline"
+          >
+            Privacidade
+          </Link>
         </nav>
       </div>
 
