@@ -6,6 +6,7 @@ export const site = {
   assets: {
     logoFull: "/logo-full.png",
     logoMark: "/logo-mark.jpg",
+    favicon: "/favicon.png",
   },
 
   contact: {

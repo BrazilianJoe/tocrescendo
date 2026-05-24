@@ -38,7 +38,8 @@ Logos em [`public/`](public/):
 | Arquivo | Uso |
 |---------|-----|
 | `logo-full.png` | Logo com texto (header, footer, redes sociais) |
-| `logo-mark.jpg` | Logomarca sem texto (favicon, decoração no hero) |
+| `logo-mark.jpg` | Logomarca sem texto (decoração) |
+| `favicon.png` | Ícone do site (aba do navegador, atalho mobile) |
 
 Originais mantidos: `To Crescendo Logo Gemini.png`, `Fundo logomarca - Tô Crescendo.jpg`.
 

@@ -71,7 +71,7 @@ export const privacy = {
   ],
 
   contact: {
-    title: "Contato para privacidade",
+    title: "Contato para política de privacidade",
     items: [
       `WhatsApp: ${site.contact.phoneDisplay}`,
       `Instagram: ${site.contact.instagram}`,

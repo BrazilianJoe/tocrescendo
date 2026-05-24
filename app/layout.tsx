@@ -41,8 +41,8 @@ export const metadata: Metadata = {
     images: [site.assets.logoFull],
   },
   icons: {
-    icon: site.assets.logoMark,
-    apple: site.assets.logoMark,
+    icon: site.assets.favicon,
+    apple: site.assets.favicon,
   },
 };
 
