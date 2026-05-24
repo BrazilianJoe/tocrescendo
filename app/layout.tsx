@@ -40,10 +40,6 @@ export const metadata: Metadata = {
     description: site.seo.description,
     images: [site.assets.logoFull],
   },
-  icons: {
-    icon: site.assets.favicon,
-    apple: site.assets.favicon,
-  },
 };
 
 export default function RootLayout({
