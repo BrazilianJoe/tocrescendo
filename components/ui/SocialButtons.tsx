@@ -1,5 +1,8 @@
+"use client";
+
 import { site } from "@/content/site";
 import { whatsappUrl } from "@/lib/links";
+import { track } from "@vercel/analytics";
 
 type Variant = "primary" | "secondary" | "outline" | "light" | "light-outline";
 
@@ -75,6 +78,7 @@ export function WhatsAppButton({
       target="_blank"
       rel="noopener noreferrer"
       className={`${variants[variant]} ${className}`}
+      onClick={() => track("cta_whatsapp_click")}
     >
       <WhatsAppIcon className="h-5 w-5" />
       {label}
@@ -97,6 +101,7 @@ export function InstagramButton({
       target="_blank"
       rel="noopener noreferrer"
       className={`${variants[variant]} ${className}`}
+      onClick={() => track("cta_instagram_click")}
     >
       <InstagramIcon className="h-5 w-5" />
       {label}
@@ -122,6 +127,7 @@ export function BookingButton({
       target="_blank"
       rel="noopener noreferrer"
       className={`${variants[variant]} ${className}`}
+      onClick={() => track("cta_booking_click")}
     >
       <CalendarIcon className="h-5 w-5" />
       {label}

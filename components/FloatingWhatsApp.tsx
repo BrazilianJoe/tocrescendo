@@ -1,4 +1,7 @@
+"use client";
+
 import { whatsappUrl } from "@/lib/links";
+import { track } from "@vercel/analytics";
 
 function WhatsAppIcon({ className }: { className?: string }) {
   return (
@@ -21,6 +24,7 @@ export function FloatingWhatsApp() {
       rel="noopener noreferrer"
       aria-label="Falar no WhatsApp"
       className="fixed bottom-6 right-4 z-50 inline-flex items-center gap-2 rounded-full bg-secondary px-4 py-3 text-sm font-semibold text-white shadow-lg shadow-secondary/30 transition-transform hover:scale-105 hover:bg-secondary-dark focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-secondary sm:bottom-8 sm:right-6 sm:px-5 sm:py-3.5"
+      onClick={() => track("cta_whatsapp_floating_click")}
     >
       <WhatsAppIcon className="h-6 w-6 shrink-0" />
       <span className="hidden sm:inline">Falar agora</span>
