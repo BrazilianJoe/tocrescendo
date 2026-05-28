@@ -40,6 +40,26 @@ function InstagramIcon({ className }: { className?: string }) {
   );
 }
 
+function CalendarIcon({ className }: { className?: string }) {
+  return (
+    <svg
+      className={className}
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth={1.8}
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      aria-hidden
+    >
+      <path d="M8 2v3M16 2v3" />
+      <path d="M3 9h18" />
+      <path d="M5 5h14a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2Z" />
+      <path d="M8 13h.01M12 13h.01M16 13h.01M8 17h.01M12 17h.01" />
+    </svg>
+  );
+}
+
 export function WhatsAppButton({
   variant = "primary",
   className = "",
@@ -84,6 +104,31 @@ export function InstagramButton({
   );
 }
 
+export function BookingButton({
+  variant = "secondary",
+  className = "",
+  label = "Agendar primeira conversa",
+}: {
+  variant?: Variant;
+  className?: string;
+  label?: string;
+}) {
+  const href = site.contact.bookingUrl;
+  if (!href) return null;
+
+  return (
+    <a
+      href={href}
+      target="_blank"
+      rel="noopener noreferrer"
+      className={`${variants[variant]} ${className}`}
+    >
+      <CalendarIcon className="h-5 w-5" />
+      {label}
+    </a>
+  );
+}
+
 export function SocialButtonGroup({
   className = "",
   whatsappVariant = "primary" as Variant,
@@ -91,6 +136,7 @@ export function SocialButtonGroup({
 }) {
   return (
     <div className={`flex flex-col gap-3 sm:flex-row sm:gap-4 ${className}`}>
+      <BookingButton className="w-full sm:w-auto" />
       <WhatsAppButton variant={whatsappVariant} className="w-full sm:w-auto" />
       <InstagramButton
         variant={instagramVariant}

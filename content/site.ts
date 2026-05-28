@@ -15,6 +15,7 @@ export const site = {
     whatsappMessage:
       "Olá! Vim pelo site Tô Crescendo e gostaria de saber mais sobre o atendimento neuropsicopedagógico.",
     instagram: "https://www.instagram.com/institutotocrescendo/",
+    bookingUrl: "https://calendar.app.google/k18WsXto7mzUN2u6A",
   },
 
   professional: {
