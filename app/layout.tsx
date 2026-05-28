@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Analytics } from "@vercel/analytics/next";
 import { DM_Sans, Fraunces } from "next/font/google";
+import Script from "next/script";
 import { JsonLd } from "@/components/JsonLd";
 import { site } from "@/content/site";
 import "./globals.css";
@@ -42,6 +43,8 @@ export const metadata: Metadata = {
   },
 };
 
+const GA4_ID = process.env.NEXT_PUBLIC_GA4_ID ?? "G-E5S9MSKRDK";
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -56,6 +59,18 @@ export default function RootLayout({
         <JsonLd />
         {children}
         <Analytics />
+        <Script
+          src={`https://www.googletagmanager.com/gtag/js?id=${GA4_ID}`}
+          strategy="afterInteractive"
+        />
+        <Script id="ga4-init" strategy="afterInteractive">
+          {`
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', '${GA4_ID}');
+          `.trim()}
+        </Script>
       </body>
     </html>
   );

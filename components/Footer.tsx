@@ -4,7 +4,7 @@ import Link from "next/link";
 import { Logo } from "@/components/Logo";
 import { site } from "@/content/site";
 import { phoneTelUrl, whatsappUrl } from "@/lib/links";
-import { track } from "@vercel/analytics";
+import { trackEvent } from "@/lib/analytics";
 
 export function Footer() {
   const year = new Date().getFullYear();
@@ -24,7 +24,7 @@ export function Footer() {
               <Link
                 href={phoneTelUrl()}
                 className="font-medium text-primary-dark hover:underline"
-                onClick={() => track("cta_phone_click")}
+                onClick={() => trackEvent("cta_phone_click")}
               >
                 {site.contact.phoneDisplay}
               </Link>
@@ -38,7 +38,7 @@ export function Footer() {
             target="_blank"
             rel="noopener noreferrer"
             className="text-sm font-medium text-primary-dark hover:underline"
-            onClick={() => track("cta_whatsapp_footer_click")}
+            onClick={() => trackEvent("cta_whatsapp_footer_click")}
           >
             WhatsApp
           </Link>
@@ -47,7 +47,7 @@ export function Footer() {
             target="_blank"
             rel="noopener noreferrer"
             className="text-sm font-medium text-secondary-dark hover:underline"
-            onClick={() => track("cta_instagram_footer_click")}
+            onClick={() => trackEvent("cta_instagram_footer_click")}
           >
             Instagram
           </Link>
