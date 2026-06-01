@@ -7,6 +7,7 @@ export const site = {
     logoFull: "/logo-full.png",
     logoMark: "/logo-mark.jpg",
     favicon: "/favicon.png",
+    bioPhoto: "/bio.jpg",
   },
 
   contact: {
@@ -27,10 +28,10 @@ export const site = {
   },
 
   nav: [
-    { label: "Sobre", href: "#sobre" },
     { label: "Atendimento", href: "#atendimento" },
     { label: "Acompanhamento", href: "#para-quem" },
     { label: "Fale comigo", href: "#contato" },
+    { label: "Bio", href: "#bio", ariaLabel: "Biografia profissional" },
   ],
 
   hero: {
@@ -45,6 +46,16 @@ export const site = {
         icon: "map" as const,
       },
     ],
+  },
+
+  bio: {
+    title: "Quem acompanha seu filho",
+    paragraphs: [
+      "Neuropsicopedagoga e analista do comportamento, com graduação em Psicopedagogia e formação contínua em neuropsicopedagogia, psicanálise clínica, análise do comportamento aplicada (ABA) e educação especial inclusiva.",
+      "Atua há mais de 8 anos na primeira infância, com foco em TEA, TOD e altas habilidades e superdotação (AH/SD) — com olhar individualizado para cada família e cada ritmo de desenvolvimento.",
+    ],
+    photoAlt:
+      "Michelle Barbosa Pastorello Freire, neuropsicopedagoga em Porto Alegre",
   },
 
   about: {

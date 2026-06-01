@@ -2,10 +2,7 @@ import { site } from "@/content/site";
 
 export function About() {
   return (
-    <section
-      id="sobre"
-      className="scroll-mt-20 border-t border-border bg-primary-light/15 px-4 py-16 sm:px-6 sm:py-20 lg:px-8"
-    >
+    <section className="border-t border-border bg-primary-light/15 px-4 py-16 sm:px-6 sm:py-20 lg:px-8">
       <div className="mx-auto max-w-6xl">
         <div className="grid gap-12 lg:grid-cols-2 lg:items-center">
           <div>
@@ -18,12 +15,6 @@ export function About() {
                 <p key={p.slice(0, 40)}>{p}</p>
               ))}
             </div>
-            <p className="mt-6 text-sm font-medium text-primary-dark">
-              {site.professional.name}
-              <span className="block font-normal text-muted">
-                {site.professional.credential}
-              </span>
-            </p>
           </div>
 
           <ul className="space-y-4">

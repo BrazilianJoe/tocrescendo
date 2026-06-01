@@ -1,5 +1,6 @@
 import { About } from "@/components/About";
 import { Audience } from "@/components/Audience";
+import { Bio } from "@/components/Bio";
 import { CTA } from "@/components/CTA";
 import { FloatingWhatsApp } from "@/components/FloatingWhatsApp";
 import { Footer } from "@/components/Footer";
@@ -16,6 +17,7 @@ export default function Home() {
         <About />
         <Services />
         <Audience />
+        <Bio />
         <CTA />
       </main>
       <Footer />

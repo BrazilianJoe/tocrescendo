@@ -23,6 +23,7 @@ export function Header() {
               key={item.href}
               href={item.href}
               className="text-sm font-medium text-muted transition-colors hover:text-primary-dark"
+              aria-label={"ariaLabel" in item ? item.ariaLabel : undefined}
             >
               {item.label}
             </Link>
@@ -79,6 +80,7 @@ export function Header() {
                 <Link
                   href={item.href}
                   className="block py-2 text-base font-medium text-foreground"
+                  aria-label={"ariaLabel" in item ? item.ariaLabel : undefined}
                   onClick={() => setOpen(false)}
                 >
                   {item.label}
