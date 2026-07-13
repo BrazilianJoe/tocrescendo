@@ -1,15 +1,29 @@
 # Tô Crescendo — Neuropsicopedagogia
 
-Landing page profissional para neuropsicopedagogia online e a domicílio em Porto Alegre. Site estático em Next.js, sem banco de dados.
+Landing page e blog para neuropsicopedagogia online e a domicílio em Porto Alegre. Next.js + Neon Postgres + TipTap (admin).
 
 ## Desenvolvimento local
 
 ```bash
 npm install
+cp .env.example .env.local
+# Preencha DATABASE_URL, AUTH_SECRET, ADMIN_*
+npm run db:push
+npm run db:seed
 npm run dev
 ```
 
-Abra [http://localhost:3000](http://localhost:3000).
+Abra [http://localhost:3000](http://localhost:3000). Admin: [http://localhost:3000/admin/login](http://localhost:3000/admin/login).
+
+### Blog / admin
+
+| Item | Detalhe |
+|------|---------|
+| DB | Neon Postgres (`DATABASE_URL`) |
+| ORM | Drizzle (`npm run db:push` / `db:generate`) |
+| Auth | Auth.js credentials (`/admin/login`) |
+| Editor | TipTap — salva JSON no banco |
+| Imagens | Sharp → AVIF + WebP; Vercel Blob em prod (`BLOB_READ_WRITE_TOKEN`), fallback `public/uploads` em local |
 
 ### Erro no `npm run dev` (Turbopack / página em branco)
 

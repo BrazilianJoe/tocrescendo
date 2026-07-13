@@ -10,7 +10,7 @@ export function Brand({
 }) {
   return (
     <Link
-      href="#"
+      href="/"
       className={`group shrink-0 ${className}`.trim()}
       onClick={onClick}
     >

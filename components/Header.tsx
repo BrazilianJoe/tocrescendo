@@ -15,7 +15,7 @@ export function Header() {
         <Brand />
 
         <nav
-          className="hidden items-center gap-8 md:flex"
+          className="hidden items-center gap-6 lg:flex xl:gap-8"
           aria-label="Navegação principal"
         >
           {site.nav.map((item) => (
@@ -30,13 +30,13 @@ export function Header() {
           ))}
         </nav>
 
-        <div className="hidden md:block">
+        <div className="hidden lg:block">
           <WhatsAppButton label="WhatsApp" className="!px-4 !py-2 text-xs" />
         </div>
 
         <button
           type="button"
-          className="inline-flex items-center justify-center rounded-lg p-2 text-foreground md:hidden"
+          className="inline-flex items-center justify-center rounded-lg p-2 text-foreground lg:hidden"
           aria-expanded={open}
           aria-controls="mobile-menu"
           aria-label={open ? "Fechar menu" : "Abrir menu"}
@@ -71,7 +71,7 @@ export function Header() {
       {open && (
         <nav
           id="mobile-menu"
-          className="border-t border-border bg-surface px-4 py-4 md:hidden"
+          className="border-t border-border bg-surface px-4 py-4 lg:hidden"
           aria-label="Menu mobile"
         >
           <ul className="flex flex-col gap-3">

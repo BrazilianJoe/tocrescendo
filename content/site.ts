@@ -28,10 +28,11 @@ export const site = {
   },
 
   nav: [
-    { label: "Atendimento", href: "#atendimento" },
-    { label: "Acompanhamento", href: "#para-quem" },
-    { label: "Fale comigo", href: "#contato" },
-    { label: "Bio", href: "#bio", ariaLabel: "Biografia profissional" },
+    { label: "Atendimento", href: "/#atendimento" },
+    { label: "Acompanhamento", href: "/#para-quem" },
+    { label: "Blog", href: "/blog" },
+    { label: "Fale comigo", href: "/#contato" },
+    { label: "Bio", href: "/#bio", ariaLabel: "Biografia profissional" },
   ],
 
   hero: {
