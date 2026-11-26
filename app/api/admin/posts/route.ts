@@ -1,4 +1,4 @@
-import { eq } from "drizzle-orm";
+import { eq, sql } from "drizzle-orm";
 import { NextResponse } from "next/server";
 import { z } from "zod";
 import { db } from "@/db";
@@ -155,14 +155,11 @@ export async function PATCH(request: Request) {
       ? await ensureUniqueSlug(title, id)
       : existing.slug;
 
-  const nextStatus = status ?? existing.status;
-  let publishedAt = existing.publishedAt;
-  if (nextStatus === "PUBLISHED" && !publishedAt) {
-    publishedAt = new Date();
-  }
-  if (nextStatus === "DRAFT") {
-    publishedAt = null;
-  }
+  const publishedAt = status === "PUBLISHED"
+    ? sql`case when ${posts.status} = 'PUBLISHED' then coalesce(${posts.publishedAt}, now()) else now() end`
+    : status === "DRAFT"
+      ? sql`case when ${posts.status} = 'DRAFT' then ${posts.publishedAt} end`
+      : undefined;
 
   const [post] = await db
     .update(posts)
@@ -180,7 +177,7 @@ export async function PATCH(request: Request) {
           ? existing.coverWebpUrl
           : normalizeCoverUrl(coverWebpUrl),
       coverAlt: coverAlt ?? existing.coverAlt,
-      status: nextStatus,
+      status,
       slug,
       publishedAt,
       updatedAt: new Date(),

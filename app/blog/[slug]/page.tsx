@@ -12,6 +12,7 @@ import {
 } from "@/lib/post-text";
 import { getPublishedPostBySlug } from "@/lib/posts";
 import { renderPostHtml } from "@/lib/render-post";
+import { sanitizeImageSrc } from "@/lib/safe-url";
 
 export const dynamic = "force-dynamic";
 
@@ -23,18 +24,20 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   if (!post) return { title: "Artigo não encontrado" };
 
   const rawImage =
-    post.coverWebpUrl || post.coverAvifUrl || site.assets.logoFull;
-  const ogImage = rawImage.startsWith("http")
-    ? rawImage
-    : `${site.url}${rawImage}`;
+    sanitizeImageSrc(post.coverWebpUrl) ||
+    sanitizeImageSrc(post.coverAvifUrl) ||
+    site.assets.logoFull;
+  const ogImage = new URL(rawImage, site.url).href;
+  const seoTitle = post.seoTitle || `${post.title} | ${site.name}`;
+  const seoDescription = post.seoDescription || post.summary || site.seo.description;
 
   return {
-    title: `${post.title} | ${site.name}`,
-    description: post.summary || site.seo.description,
+    title: seoTitle,
+    description: seoDescription,
     alternates: { canonical: `${site.url}/blog/${post.slug}` },
     openGraph: {
-      title: post.title,
-      description: post.summary || undefined,
+      title: seoTitle,
+      description: seoDescription,
       type: "article",
       url: `${site.url}/blog/${post.slug}`,
       images: [{ url: ogImage, alt: post.coverAlt || post.title }],

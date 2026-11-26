@@ -73,6 +73,7 @@ export function getTiptapExtensions() {
   return [
     StarterKit.configure({
       heading: { levels: [2, 3] },
+      link: false,
     }),
     SafeLink.configure({
       openOnClick: false,

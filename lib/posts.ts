@@ -1,4 +1,4 @@
-import { and, desc, eq } from "drizzle-orm";
+import { and, desc, eq, lte } from "drizzle-orm";
 import { db } from "@/db";
 import { posts, type Post } from "@/db/schema";
 import { slugify } from "@/lib/slug";
@@ -9,7 +9,12 @@ export async function listPublishedPosts(): Promise<Post[]> {
     return await db
       .select()
       .from(posts)
-      .where(eq(posts.status, "PUBLISHED"))
+      .where(
+        and(
+          eq(posts.status, "PUBLISHED"),
+          lte(posts.publishedAt, new Date()),
+        ),
+      )
       .orderBy(desc(posts.publishedAt));
   } catch (err) {
     console.error("listPublishedPosts failed:", err);
@@ -25,7 +30,13 @@ export async function getPublishedPostBySlug(
     const [post] = await db
       .select()
       .from(posts)
-      .where(and(eq(posts.slug, slug), eq(posts.status, "PUBLISHED")))
+      .where(
+        and(
+          eq(posts.slug, slug),
+          eq(posts.status, "PUBLISHED"),
+          lte(posts.publishedAt, new Date()),
+        ),
+      )
       .limit(1);
     return post ?? null;
   } catch (err) {

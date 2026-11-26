@@ -1,7 +1,13 @@
+const defaultSiteUrl = "https://www.tocrescendo.com.br";
+
+const configuredSiteUrl = process.env.NEXT_PUBLIC_SITE_URL?.trim();
+const siteUrl =
+  (configuredSiteUrl || defaultSiteUrl).replace(/\/+$/, "") || defaultSiteUrl;
+
 export const site = {
   name: "Tô Crescendo",
   tagline: "Neuropsicopedagogia",
-  url: "https://tocrescendo.vercel.app",
+  url: siteUrl,
 
   assets: {
     logoFull: "/logo-full.png",

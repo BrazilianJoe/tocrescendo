@@ -1,3 +1,5 @@
+import { sanitizeImageSrc } from "@/lib/safe-url";
+
 type CoverProps = {
   avifUrl?: string | null;
   webpUrl?: string | null;
@@ -7,19 +9,20 @@ type CoverProps = {
 };
 
 export function CoverPicture({
-  avifUrl,
-  webpUrl,
+  avifUrl: rawAvifUrl,
+  webpUrl: rawWebpUrl,
   alt = "",
   className = "",
   priority = false,
 }: CoverProps) {
+  const avifUrl = sanitizeImageSrc(rawAvifUrl);
+  const webpUrl = sanitizeImageSrc(rawWebpUrl);
   if (!webpUrl && !avifUrl) return null;
 
   return (
     <picture>
       {avifUrl ? <source srcSet={avifUrl} type="image/avif" /> : null}
       {webpUrl ? <source srcSet={webpUrl} type="image/webp" /> : null}
-      {/* eslint-disable-next-line @next/next/no-img-element */}
       <img
         src={webpUrl || avifUrl || ""}
         alt={alt || ""}
