@@ -30,6 +30,8 @@ export const posts = pgTable(
     slug: text("slug").notNull().unique(),
     title: text("title").notNull(),
     summary: text("summary").notNull().default(""),
+    seoTitle: text("seo_title"),
+    seoDescription: text("seo_description"),
     content: jsonb("content").notNull().$type<Record<string, unknown>>(),
     coverAvifUrl: text("cover_avif_url"),
     coverWebpUrl: text("cover_webp_url"),

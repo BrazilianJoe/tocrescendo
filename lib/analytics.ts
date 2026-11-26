@@ -9,8 +9,8 @@ export type GaEventName =
 
 declare global {
   interface Window {
-    gtag?: (...args: any[]) => void;
-    clarity?: (...args: any[]) => void;
+    gtag?: (...args: unknown[]) => void;
+    clarity?: (...args: unknown[]) => void;
   }
 }
 
@@ -20,8 +20,7 @@ export function trackEvent(name: GaEventName) {
   // GA4
   window.gtag?.("event", name);
 
-  // Clarity (optional – will be wired later if enabled)
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-call
+  // Clarity
   window.clarity?.("event", name);
 }
 

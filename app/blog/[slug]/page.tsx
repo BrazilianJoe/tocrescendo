@@ -27,14 +27,16 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const ogImage = rawImage.startsWith("http")
     ? rawImage
     : `${site.url}${rawImage}`;
+  const seoTitle = post.seoTitle || `${post.title} | ${site.name}`;
+  const seoDescription = post.seoDescription || post.summary || site.seo.description;
 
   return {
-    title: `${post.title} | ${site.name}`,
-    description: post.summary || site.seo.description,
+    title: seoTitle,
+    description: seoDescription,
     alternates: { canonical: `${site.url}/blog/${post.slug}` },
     openGraph: {
-      title: post.title,
-      description: post.summary || undefined,
+      title: seoTitle,
+      description: seoDescription,
       type: "article",
       url: `${site.url}/blog/${post.slug}`,
       images: [{ url: ogImage, alt: post.coverAlt || post.title }],

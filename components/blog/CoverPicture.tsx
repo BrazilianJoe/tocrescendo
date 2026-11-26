@@ -19,7 +19,6 @@ export function CoverPicture({
     <picture>
       {avifUrl ? <source srcSet={avifUrl} type="image/avif" /> : null}
       {webpUrl ? <source srcSet={webpUrl} type="image/webp" /> : null}
-      {/* eslint-disable-next-line @next/next/no-img-element */}
       <img
         src={webpUrl || avifUrl || ""}
         alt={alt || ""}
