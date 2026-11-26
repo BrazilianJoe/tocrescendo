@@ -8,6 +8,7 @@ import { trackEvent } from "@/lib/analytics";
 
 export function Footer() {
   const year = new Date().getFullYear();
+  const { address, openingHours } = site.contact;
 
   return (
     <footer className="border-t border-border bg-surface px-4 py-12 sm:px-6 lg:px-8">
@@ -20,6 +21,11 @@ export function Footer() {
             </p>
             <p className="text-sm text-muted">{site.professional.credential}</p>
             <p className="text-sm text-muted">{site.professional.serviceArea}</p>
+            <p className="mt-2 text-sm text-muted">
+              {address.streetAddress} · {address.addressLocality},{" "}
+              {address.addressRegion} · CEP {address.postalCode}
+            </p>
+            <p className="text-sm text-muted">{openingHours.display}</p>
             <p className="mt-2 text-sm">
               <Link
                 href={phoneTelUrl()}
@@ -50,6 +56,14 @@ export function Footer() {
             onClick={() => trackEvent("cta_instagram_footer_click")}
           >
             Instagram
+          </Link>
+          <Link
+            href={site.contact.x}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-sm font-medium text-secondary-dark hover:underline"
+          >
+            X
           </Link>
           <Link
             href="/privacidade"

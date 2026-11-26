@@ -20,26 +20,21 @@ const fraunces = Fraunces({
 
 export const metadata: Metadata = {
   metadataBase: new URL(site.url),
-  title: site.seo.title,
+  title: {
+    default: site.seo.title,
+    template: `%s | ${site.name}`,
+  },
   description: site.seo.description,
   keywords: [...site.seo.keywords],
-  alternates: {
-    canonical: site.url,
-  },
   openGraph: {
-    title: site.seo.title,
-    description: site.seo.description,
-    url: site.url,
+    url: "./",
     siteName: site.name,
     locale: "pt_BR",
     type: "website",
-    images: [{ url: site.assets.logoFull, alt: site.seo.title }],
+    images: [{ url: site.assets.logoFull, alt: site.name }],
   },
   twitter: {
     card: "summary_large_image",
-    title: site.seo.title,
-    description: site.seo.description,
-    images: [site.assets.logoFull],
   },
 };
 

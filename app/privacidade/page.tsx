@@ -6,9 +6,10 @@ import { privacy } from "@/content/privacy";
 import { site } from "@/content/site";
 
 export const metadata: Metadata = {
-  title: `Privacidade | ${site.name}`,
+  title: "Política de Privacidade",
   description:
-    "Política de Privacidade do site Tô Crescendo — tratamento de dados pessoais conforme a LGPD.",
+    "Entenda como o site Tô Crescendo trata dados pessoais e como exercer seus direitos previstos na LGPD.",
+  alternates: { canonical: `${site.url}/privacidade` },
   robots: { index: true, follow: true },
 };
 

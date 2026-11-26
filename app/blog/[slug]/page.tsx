@@ -23,24 +23,32 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const post = await getPublishedPostBySlug(slug);
   if (!post) return { title: "Artigo não encontrado" };
 
-  const rawImage =
+  const coverImage =
     sanitizeImageSrc(post.coverWebpUrl) ||
-    sanitizeImageSrc(post.coverAvifUrl) ||
-    site.assets.logoFull;
-  const ogImage = new URL(rawImage, site.url).href;
-  const seoTitle = post.seoTitle || `${post.title} | ${site.name}`;
-  const seoDescription = post.seoDescription || post.summary || site.seo.description;
+    sanitizeImageSrc(post.coverAvifUrl);
+  const seoTitle = post.seoTitle?.trim() || post.title;
+  const includesSiteName = seoTitle
+    .toLocaleLowerCase("pt-BR")
+    .includes(site.name.toLocaleLowerCase("pt-BR"));
+  const seoDescription =
+    post.seoDescription?.trim() || post.summary?.trim() || site.seo.description;
+  const postUrl = `${site.url}/blog/${post.slug}`;
 
   return {
-    title: seoTitle,
+    title: includesSiteName ? { absolute: seoTitle } : seoTitle,
     description: seoDescription,
-    alternates: { canonical: `${site.url}/blog/${post.slug}` },
+    alternates: { canonical: postUrl },
     openGraph: {
-      title: seoTitle,
-      description: seoDescription,
       type: "article",
-      url: `${site.url}/blog/${post.slug}`,
-      images: [{ url: ogImage, alt: post.coverAlt || post.title }],
+      url: postUrl,
+      siteName: site.name,
+      locale: "pt_BR",
+      images: [
+        {
+          url: new URL(coverImage || site.assets.logoFull, site.url).href,
+          alt: coverImage ? post.coverAlt?.trim() || post.title : site.name,
+        },
+      ],
     },
   };
 }
@@ -90,7 +98,7 @@ export default async function BlogPostPage({ params }: Props) {
                 <CoverPicture
                   avifUrl={post.coverAvifUrl}
                   webpUrl={post.coverWebpUrl}
-                  alt={post.coverAlt || post.title}
+                  alt={post.coverAlt?.trim() || post.title}
                   priority
                   className="aspect-[16/9] w-full object-cover"
                 />
