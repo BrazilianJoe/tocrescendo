@@ -19,6 +19,9 @@ export function CTA() {
           whatsappVariant="light"
           instagramVariant="light-outline"
         />
+        <p className="mt-4 text-sm text-white/90">
+          {site.contact.openingHours.display}
+        </p>
       </div>
     </section>
   );

@@ -4,6 +4,12 @@ const configuredSiteUrl = process.env.NEXT_PUBLIC_SITE_URL?.trim();
 const siteUrl =
   (configuredSiteUrl || defaultSiteUrl).replace(/\/+$/, "") || defaultSiteUrl;
 
+const openingHours = {
+  dayOfWeek: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
+  opens: "09:00",
+  closes: "19:00",
+} as const;
+
 export const site = {
   name: "Tô Crescendo",
   tagline: "Neuropsicopedagogia",
@@ -22,7 +28,19 @@ export const site = {
     whatsappMessage:
       "Olá! Vim pelo site Tô Crescendo e gostaria de saber mais sobre o atendimento neuropsicopedagógico.",
     instagram: "https://www.instagram.com/institutotocrescendo/",
+    x: "https://x.com/tocrescendo_",
     bookingUrl: "https://calendar.app.google/k18WsXto7mzUN2u6A",
+    address: {
+      streetAddress: "Rua Pau Brasil, 593, Hípica",
+      addressLocality: "Porto Alegre",
+      addressRegion: "RS",
+      postalCode: "91755-670",
+      addressCountry: "BR",
+    },
+    openingHours: {
+      ...openingHours,
+      display: `De segunda a sexta-feira, das ${openingHours.opens} às ${openingHours.closes} (horário de Brasília)`,
+    },
   },
 
   professional: {
@@ -180,10 +198,9 @@ export const site = {
   },
 
   seo: {
-    title:
-      "Neuropsicopedagogia em Porto Alegre e Online | Tô Crescendo – TEA, TDAH e Dificuldades de Aprendizagem",
+    title: "Neuropsicopedagogia em Porto Alegre e online | Tô Crescendo",
     description:
-      "Neuropsicopedagoga em Porto Alegre e online. Avaliação TEA, TDAH, AH/SD e TOD, acompanhamento e dificuldades de aprendizagem. Atendimento a domicílio na região e em todo o Brasil.",
+      "Tô Crescendo oferece avaliação e acompanhamento em neuropsicopedagogia a domicílio em Porto Alegre e região e online em todo o Brasil.",
     keywords: [
       "neuropsicopedagoga Porto Alegre",
       "neuropsicopedagogia online",

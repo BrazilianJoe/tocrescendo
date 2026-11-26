@@ -13,11 +13,20 @@ import { listPublishedPosts } from "@/lib/posts";
 
 export const dynamic = "force-dynamic";
 
+const blogUrl = `${site.url}/blog`;
+
 export const metadata: Metadata = {
-  title: `Blog | ${site.name}`,
+  title: "Blog de neuropsicopedagogia em Porto Alegre",
   description:
-    "Artigos sobre neuropsicopedagogia, aprendizagem, TEA, TDAH e desenvolvimento infantil.",
-  alternates: { canonical: `${site.url}/blog` },
+    "No blog da Tô Crescendo, de Porto Alegre, você encontra artigos sobre neuropsicopedagogia, aprendizagem, TEA, TDAH e desenvolvimento infantil.",
+  alternates: { canonical: blogUrl },
+  openGraph: {
+    url: blogUrl,
+    siteName: site.name,
+    locale: "pt_BR",
+    type: "website",
+    images: [{ url: site.assets.logoFull, alt: site.name }],
+  },
 };
 
 function formatDate(date: Date | null) {
@@ -66,7 +75,7 @@ export default async function BlogIndexPage() {
                         <CoverPicture
                           avifUrl={latest.coverAvifUrl}
                           webpUrl={latest.coverWebpUrl}
-                          alt={latest.coverAlt || latest.title}
+                          alt={latest.coverAlt?.trim() || latest.title}
                           priority
                           className="aspect-[16/9] w-full object-cover"
                         />
@@ -116,7 +125,7 @@ export default async function BlogIndexPage() {
                               <CoverPicture
                                 avifUrl={post.coverAvifUrl}
                                 webpUrl={post.coverWebpUrl}
-                                alt={post.coverAlt || post.title}
+                                alt={post.coverAlt?.trim() || post.title}
                                 className="aspect-[4/3] w-full object-cover sm:aspect-square"
                               />
                             </Link>
@@ -125,14 +134,14 @@ export default async function BlogIndexPage() {
                             <p className="text-sm text-muted">
                               {metaLine(post.publishedAt, post.content)}
                             </p>
-                            <h3 className="font-display mt-1 text-xl font-semibold">
+                            <h2 className="font-display mt-1 text-xl font-semibold">
                               <Link
                                 href={`/blog/${post.slug}`}
                                 className="text-foreground hover:text-primary-dark"
                               >
                                 {post.title}
                               </Link>
-                            </h3>
+                            </h2>
                             <p className="mt-2 leading-relaxed text-muted">
                               {postExcerpt(post.summary, post.content, 180)}
                             </p>
