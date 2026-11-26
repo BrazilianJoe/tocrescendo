@@ -36,6 +36,9 @@ describe("sanitizeImageSrc", () => {
 
   it("rejects path traversal and dangerous schemes", () => {
     expect(sanitizeImageSrc("/uploads/../secret")).toBeNull();
+    expect(sanitizeImageSrc("/uploads/%2e%2e/secret")).toBeNull();
+    expect(sanitizeImageSrc("/uploads/folder%2ffile.webp")).toBeNull();
+    expect(sanitizeImageSrc("https://user:password@cdn.example.com/a.webp")).toBeNull();
     expect(sanitizeImageSrc("javascript:alert(1)")).toBeNull();
     expect(sanitizeImageSrc("data:image/png;base64,xxx")).toBeNull();
   });

@@ -25,25 +25,10 @@ function createMemoryStore(): ApiV1PostStore {
       rows.push(post);
       return post;
     },
-    async find(idOrSlug) {
-      return rows.find((post) => post.id === idOrSlug || post.slug === idOrSlug) ?? null;
-    },
-    async update(id, values) {
-      const index = rows.findIndex((post) => post.id === id);
-      if (index === -1) return null;
+    async update({ post: existing }, values) {
+      const index = rows.findIndex((post) => post.id === existing.id);
       rows[index] = { ...rows[index], ...values } as Post;
       return rows[index];
-    },
-    async remove(id) {
-      const index = rows.findIndex((post) => post.id === id);
-      if (index === -1) return false;
-      rows.splice(index, 1);
-      return true;
-    },
-    async list({ status, limit, offset }) {
-      return rows
-        .filter((post) => !status || post.status === status)
-        .slice(offset, offset + limit);
     },
     async ensureUniqueSlug(value, excludeId) {
       const base = slugify(value) || "artigo";
@@ -81,12 +66,13 @@ describe("fluxo de publicação API v1", () => {
 
     expect(first.status).toBe("DRAFT");
     expect(first.publishedAt).toBeNull();
+    expect(first.authorId).toBe(authorId);
     expect(first.slug).toBe("rotina-de-estudos");
     expect(second.slug).toBe("rotina-de-estudos-2");
     expect(first.content).toMatchObject({ type: "doc" });
 
     const published = await updateApiV1Post(
-      first,
+      { post: first, revision: "1" },
       updateApiV1PostSchema.parse({
         summary: "Atualizado.",
         status: "PUBLISHED",
@@ -100,5 +86,41 @@ describe("fluxo de publicação API v1", () => {
       summary: "Atualizado.",
       publishedAt: now,
     });
+  });
+
+  it("edita rascunhos vencidos e permite antecipar ou cancelar um agendamento", async () => {
+    const store = createMemoryStore();
+    const scheduled = await createApiV1Post(
+      createApiV1PostSchema.parse({ title: "Agendado", publishedAt: "2026-11-26T13:00:00-03:00" }),
+      authorId,
+      store,
+      now,
+    );
+    const current = { post: scheduled, revision: "1" };
+    const overdue = new Date("2026-11-26T17:00:00.000Z");
+    const edited = await updateApiV1Post(current, { summary: "Editado" }, store, overdue);
+    expect(edited).toMatchObject({
+      status: "DRAFT",
+      publishedAt: new Date("2026-11-26T16:00:00.000Z"),
+    });
+    await expect(updateApiV1Post(current, { status: "PUBLISHED" }, store, now))
+      .resolves.toMatchObject({ status: "PUBLISHED", publishedAt: now });
+    await expect(updateApiV1Post(current, { publishedAt: null }, store, now))
+      .resolves.toMatchObject({ status: "DRAFT", publishedAt: null });
+    await expect(updateApiV1Post(
+      current,
+      { status: "PUBLISHED", publishedAt: "2026-11-26T16:00:00.000Z" },
+      store,
+      now,
+    )).rejects.toThrow(/mantenha o status DRAFT/);
+  });
+
+  it("rejeita documentos TipTap fora do schema do editor", async () => {
+    const input = createApiV1PostSchema.parse({
+      title: "Artigo",
+      content: { type: "doc", content: [{ type: "unknown" }] },
+    });
+    await expect(createApiV1Post(input, authorId, createMemoryStore(), now))
+      .rejects.toThrow("Conteúdo TipTap inválido");
   });
 });

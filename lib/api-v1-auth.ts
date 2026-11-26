@@ -2,16 +2,16 @@ import { createHash, timingSafeEqual } from "node:crypto";
 
 function bearerToken(authorization: string | null): string | null {
   if (!authorization) return null;
-  const match = /^Bearer ([^\s]+)$/.exec(authorization);
+  const match = /^Bearer +([^\s,]+)$/i.exec(authorization);
   return match?.[1] ?? null;
 }
 
-export function hashApiV1Token(token: string): string {
-  return createHash("sha256").update(token).digest("hex");
+function tokenDigest(token: string): Buffer {
+  return createHash("sha256").update(token).digest();
 }
 
-function safelyCompare(left: Buffer, right: Buffer): boolean {
-  return left.length === right.length && timingSafeEqual(left, right);
+export function hashApiV1Token(token: string): string {
+  return tokenDigest(token).toString("hex");
 }
 
 /**
@@ -26,8 +26,8 @@ export function isApiV1Authorized(request: Request): boolean {
     return false;
   }
 
-  return safelyCompare(
-    Buffer.from(hashApiV1Token(token), "hex"),
+  return timingSafeEqual(
+    tokenDigest(token),
     Buffer.from(configuredHash, "hex"),
   );
 }
@@ -39,8 +39,5 @@ export function isCronAuthorized(request: Request): boolean {
 
   if (!token || !configuredSecret) return false;
 
-  return safelyCompare(
-    Buffer.from(token, "utf8"),
-    Buffer.from(configuredSecret, "utf8"),
-  );
+  return timingSafeEqual(tokenDigest(token), tokenDigest(configuredSecret));
 }

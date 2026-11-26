@@ -1,3 +1,6 @@
+const HORIZONTAL_RULE = /^\s{0,3}([-*_])(?:\s*\1){2,}\s*$/;
+const ORDERED_ITEM = /^(\d{1,9})[.)]\s+(.+)$/;
+
 type TiptapNode = {
   type: string;
   attrs?: Record<string, unknown>;
@@ -21,17 +24,17 @@ function textNode(text: string, marks?: TiptapNode["marks"]): TiptapNode {
  */
 function inlineNodes(value: string): TiptapNode[] {
   const nodes: TiptapNode[] = [];
-  const pattern = /(\*\*|__)(.+?)\1|(\*|_)(.+?)\3|`([^`]+)`|\[([^\]]+)\]\((https?:\/\/[^\s)]+)\)/g;
+  const pattern = /\*\*([^*]+)\*\*|__([^_]+)__|\*([^*]+)\*|_([^_]+)_|`([^`]+)`|\[([^\][\n]+)\]\((https?:\/\/[^\s()]+)\)/g;
   let cursor = 0;
 
   for (const match of value.matchAll(pattern)) {
     const index = match.index ?? 0;
     if (index > cursor) nodes.push(textNode(value.slice(cursor, index)));
 
-    if (match[1]) {
-      nodes.push(textNode(match[2], [{ type: "bold" }]));
-    } else if (match[3]) {
-      nodes.push(textNode(match[4], [{ type: "italic" }]));
+    if (match[1] || match[2]) {
+      nodes.push(textNode(match[1] || match[2], [{ type: "bold" }]));
+    } else if (match[3] || match[4]) {
+      nodes.push(textNode(match[3] || match[4], [{ type: "italic" }]));
     } else if (match[5]) {
       nodes.push(textNode(match[5], [{ type: "code" }]));
     } else {
@@ -76,10 +79,11 @@ export function markdownToTiptap(markdown: string): TiptapDocument {
         index += 1;
       }
       if (index < lines.length) index += 1;
+      const codeText = code.join("\n");
       content.push({
         type: "codeBlock",
         attrs: { language },
-        content: code.length ? [textNode(code.join("\n"))] : undefined,
+        content: codeText ? [textNode(codeText)] : undefined,
       });
       continue;
     }
@@ -95,7 +99,7 @@ export function markdownToTiptap(markdown: string): TiptapDocument {
       continue;
     }
 
-    if (/^\s{0,3}([-*_])(?:\s*\1){2,}\s*$/.test(line)) {
+    if (HORIZONTAL_RULE.test(line)) {
       content.push({ type: "horizontalRule" });
       index += 1;
       continue;
@@ -124,16 +128,20 @@ export function markdownToTiptap(markdown: string): TiptapDocument {
       continue;
     }
 
-    const ordered = /^\d+[.)]\s+(.+)$/.exec(line);
+    const ordered = ORDERED_ITEM.exec(line);
     if (ordered) {
       const items: TiptapNode[] = [];
       while (index < lines.length) {
-        const item = /^\d+[.)]\s+(.+)$/.exec(lines[index]);
+        const item = ORDERED_ITEM.exec(lines[index]);
         if (!item) break;
-        items.push(listItem(item[1]));
+        items.push(listItem(item[2]));
         index += 1;
       }
-      content.push({ type: "orderedList", content: items });
+      content.push({
+        type: "orderedList",
+        attrs: { start: Number(ordered[1]) },
+        content: items,
+      });
       continue;
     }
 
@@ -142,7 +150,9 @@ export function markdownToTiptap(markdown: string): TiptapDocument {
     while (
       index < lines.length &&
       lines[index].trim() &&
-      !/^(```|#{1,6}\s+|>\s?|[-*+]\s+|\d+[.)]\s+)/.test(lines[index])
+      !HORIZONTAL_RULE.test(lines[index]) &&
+      !ORDERED_ITEM.test(lines[index]) &&
+      !/^(```|#{1,6}\s+|>\s?|[-*+]\s+)/.test(lines[index])
     ) {
       linesInParagraph.push(lines[index].trim());
       index += 1;

@@ -33,7 +33,7 @@ Cabeçalhos ausentes, malformados, token incorreto, hash ausente ou hash malform
 | `GET` | `/api/v1/posts/:idOrSlug` | Busca por UUID ou slug. |
 | `PATCH` | `/api/v1/posts/:idOrSlug` | Atualiza os campos enviados. |
 | `DELETE` | `/api/v1/posts/:idOrSlug` | Exclui um post. |
-| `POST` | `/api/v1/upload` | Envia `multipart/form-data` com `file` e `alt` opcional. Aceita JPEG, PNG, WebP, GIF e AVIF de até 8 MB. |
+| `POST` | `/api/v1/upload` | Envia `multipart/form-data` com `file` e `alt` opcional. Aceita JPEG, PNG, WebP, GIF e AVIF de até 4 MiB e 25 megapixels. |
 
 Respostas de listagem usam `{ data, pagination: { page, pageSize, hasMore, nextPage } }`. As rotas de post retornam o registro completo, incluindo o JSON TipTap armazenado.
 
@@ -43,13 +43,13 @@ No `POST`, `title` é obrigatório. Os demais campos são opcionais:
 
 - `slug`: substituição opcional do slug; continua normalizado e testado contra unicidade. Se omitido, é gerado a partir do título.
 - `summary`: até 500 caracteres.
-- `content`: JSON TipTap no formato `{ "type": "doc", "content": [...] }` ou Markdown em uma string. Markdown é convertido no servidor para TipTap JSON. O limite serializado é 500.000 caracteres.
+- `content`: JSON validado pelo schema TipTap ou Markdown em uma string. O conversor aceita títulos, parágrafos, listas simples, citações, separadores, código, ênfase e links HTTP(S). HTML entra como texto. O limite serializado é 500.000 caracteres.
 - `coverAvifUrl`, `coverWebpUrl` e `coverAlt`: URLs `http(s)` ou caminhos locais `/uploads/...`; o texto alternativo tem até 200 caracteres.
 - `seoTitle` e `seoDescription`: substituem, respectivamente, o título e a descrição usados na metadata do artigo. Os limites são 200 e 500 caracteres.
 - `status`: `DRAFT` ou `PUBLISHED`.
 - `publishedAt`: data ISO 8601 com timezone, por exemplo `2026-12-01T15:00:00-03:00`.
 
-Um `POST` sem `status` sempre cria rascunho. Para publicar agora, envie `status: "PUBLISHED"`; a API preenche `publishedAt` se ele não for enviado. Para agendar, mantenha `status: "DRAFT"` e envie um `publishedAt` futuro. Não é permitido um post `PUBLISHED` com data futura.
+Um `POST` sem `status` sempre cria rascunho. Para publicar um rascunho imediatamente, envie `status: "PUBLISHED"` e omita `publishedAt`. Para agendar, mantenha `status: "DRAFT"` e envie um `publishedAt` futuro. Para cancelar um agendamento, envie `publishedAt: null` enquanto o post estiver em `DRAFT`. O status `PUBLISHED` aceita somente datas presentes ou passadas. Se um `PATCH` receber `409` por uma alteração concorrente, consulte o post novamente antes de atualizar.
 
 Quando um post publicado é criado, alterado, excluído ou promovido pelo cron, `/blog`, a página do post e `/sitemap.xml` são revalidados. A listagem pública e o sitemap também exigem `PUBLISHED` e uma data de publicação que não esteja no futuro.
 
@@ -88,15 +88,16 @@ curl -X POST "$API_URL/api/v1/upload" \
 
 Use os valores `srcAvif` e `srcWebp` da resposta de upload em `coverAvifUrl` e `coverWebpUrl`, ou em nós `optimizedImage` do conteúdo TipTap.
 
+Na Vercel, o arquivo pode ter até 4 MiB. A requisição inteira, incluindo os campos e os cabeçalhos de cada parte, pode ter até 4,25 MiB. Requisições acima do limite recebem `413`.
+
 ## Agendamento e Vercel Cron
 
-`vercel.json` chama `GET /api/cron/publish-scheduled` no início de cada hora. O Vercel envia `Authorization: Bearer $CRON_SECRET`; a rota devolve `401` quando o segredo está ausente ou incorreto. O cron promove os rascunhos cujo `publishedAt` já chegou para `PUBLISHED` e revalida as páginas públicas. Ajuste a expressão cron em `vercel.json` se a precisão horária não for suficiente para o plano Vercel em uso.
+No plano Hobby, `vercel.json` agenda uma chamada diária a `GET /api/cron/publish-scheduled` com `0 11 * * *` (11:00 UTC, 08:00 em America/Sao_Paulo). A Vercel Hobby pode iniciar o job em qualquer minuto da hora agendada. O Vercel envia `Authorization: Bearer $CRON_SECRET`. A rota devolve `401` quando o segredo está ausente ou incorreto. O cron promove os rascunhos cujo `publishedAt` já chegou para `PUBLISHED` e revalida as páginas públicas. Um agendamento fica pendente até a primeira execução bem-sucedida a partir de `publishedAt`.
 
 ## Migrações
 
-Este repositório passa a versionar migrações em `drizzle/`. Antes de implantar, revise a SQL gerada e aplique somente no ambiente alvo, em uma janela de manutenção. Como o banco já existia e era gerenciado por `drizzle-kit push`, a primeira migração versionada é incremental: ela adiciona somente `posts.seo_title` e `posts.seo_description`. Em um banco novo, crie o schema inicial aprovado antes de aplicar esta sequência incremental.
+Este repositório passa a versionar migrações em `drizzle/`. A primeira migração pressupõe o schema anterior, gerenciado por `drizzle-kit push`. Ela adiciona `posts.seo_title` e `posts.seo_description` com `ADD COLUMN IF NOT EXISTS`. O Drizzle cria seu schema e sua tabela de controle de migrações, caso ainda estejam ausentes. Em um banco novo, restaure ou crie o schema anterior antes de aplicar a migração incremental. Aplique a migração no banco de destino antes de publicar o código que usa as novas colunas.
 
 ```bash
-npm run db:generate
 npm run db:migrate
 ```

@@ -17,4 +17,13 @@ describe("markdownToTiptap", () => {
     });
     expect(JSON.stringify(document)).toContain("https://example.com");
   });
+
+  it("mantém separadores, a numeração inicial e blocos de código vazios", () => {
+    const document = markdownToTiptap("Parágrafo\n---\n3. Terceiro\n4. Quarto\n\n```\n\n```");
+    expect(document.content.map(({ type }) => type)).toEqual([
+      "paragraph", "horizontalRule", "orderedList", "codeBlock",
+    ]);
+    expect(document.content[2].attrs).toEqual({ start: 3 });
+    expect(document.content[3].content).toBeUndefined();
+  });
 });
